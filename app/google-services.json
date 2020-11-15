@@ -1,0 +1,127 @@
+{
+  "project_info": {
+    "project_number": "1033448852856",
+    "firebase_url": "https://cruises-e6423.firebaseio.com",
+    "project_id": "cruises-e6423",
+    "storage_bucket": "cruises-e6423.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033448852856:android:9069638c6e9c621b0c0c8d",
+        "android_client_info": {
+          "package_name": "com.barmej.captain"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033448852856-anmjcourl8kbjm36644fpqra3qv1jflr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGVLy53uqhdYSmCIUmRH8Dsc7hU7aq_w4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033448852856-anmjcourl8kbjm36644fpqra3qv1jflr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033448852856:android:22647f631b92f9ec0c0c8d",
+        "android_client_info": {
+          "package_name": "com.barmej.myriders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033448852856-anmjcourl8kbjm36644fpqra3qv1jflr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGVLy53uqhdYSmCIUmRH8Dsc7hU7aq_w4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033448852856-anmjcourl8kbjm36644fpqra3qv1jflr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033448852856:android:7c03bfbbf8eb9d7e0c0c8d",
+        "android_client_info": {
+          "package_name": "com.barmej.riderbluesea"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033448852856-anmjcourl8kbjm36644fpqra3qv1jflr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGVLy53uqhdYSmCIUmRH8Dsc7hU7aq_w4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033448852856-anmjcourl8kbjm36644fpqra3qv1jflr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033448852856:android:841ac1fe8f03cf0b0c0c8d",
+        "android_client_info": {
+          "package_name": "com.barmej.riders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033448852856-anmjcourl8kbjm36644fpqra3qv1jflr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGVLy53uqhdYSmCIUmRH8Dsc7hU7aq_w4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033448852856-anmjcourl8kbjm36644fpqra3qv1jflr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

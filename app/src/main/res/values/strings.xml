@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Blue Sea</string>
+    <string name="signup">إنشاء حساب</string>
+    <string name="username">اسم المستخدم</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="password">كلمة السر</string>
+    <string name="have_an_account">لديك حساب؟</string>
+    <string name="log_in">تسجيل دخول</string>
+    <string name="date_sample">29 أبريل</string>
+    <string name="available_seats">مقاعد متوفرة</string>
+    <string name="booked">محجوز</string>
+    <string name="book">احجز</string>
+    <string name="trip_status">حالة الرحلة</string>
+    <string name="to_destination">إلى الوجهة</string>
+    <string name="read_permission_needed_to_access_files">صلاحية الوصول الى الملفات مطلوبة لقراءة الصور والاصوات من جهارك</string>
+    <string name="location_permission_needed">صلاحية قراءة الموقع مطلوبة لعرض موقعك على الخرائط</string>
+    <string name="photo_selection_error">فشل في الوصول الى الصور</string>
+    <string name="choose_photo">اختر صورة</string>
+    <string name="invalid_email">الايميل غير صالح</string>
+    <string name="invalid_password">كلمة المرور قصيرة</string>
+    <string name="error_msg_username">لا يمكن أن يكون اسم المستخدم فارغا فارغًا</string>
+
+</resources>
