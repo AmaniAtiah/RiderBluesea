@@ -65,11 +65,6 @@ public class HomeActivity extends AppCompatActivity {
         setFragment(new TripListFragment());
         setFragment(new CurrentTripFragment());
 
-//        bottomNavigationView = findViewById(R.id.navigation_bottom);
-
-//        bottomNavigationView.setOnNavigationItemSelectedListener(bottomNav);
-//        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new TripListFragment()).commit();
-
         firebaseDatabase.getReference(USER_REF_PATH).child(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -86,33 +81,6 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-//    private BottomNavigationView.OnNavigationItemSelectedListener bottomNav =
-//            new BottomNavigationView.OnNavigationItemSelectedListener() {
-//                @Override
-//                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                    Fragment selectedFragment = null;
-//                    switch (item.getItemId()) {
-//                        case R.id.nav_main:
-//                            selectedFragment = new TripListFragment();
-//                            break;
-//
-//                        case R.id.nav_reserve_trip:
-//                            selectedFragment = new reservedTripFragment();
-//                            break;
-//
-//                        case R.id.nav_current_trip:
-//                            selectedFragment = new CurrentTripFragment();
-//                            break;
-//
-//                        case R.id.nav_my_account:
-//                            selectedFragment = new AccountFragment();
-//                            break;
-//                    }
-//                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, selectedFragment).commit();
-//                    return true;
-//                }
-//            };
-
     private void setFragment(Fragment fragment){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(frameLayout.getId(), fragment);
@@ -125,10 +93,7 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.main_menu, menu);
-//        SpannableString s = new SpannableString("My red MenuItem");
-//        s.setSpan(new ForegroundColorSpan(R.color.colorAccent), 0, s.length(), 0);
         return true;
-
     }
 
     @Override

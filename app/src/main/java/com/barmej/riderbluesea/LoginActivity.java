@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     startActivity(HomeActivity.getStartIntent(LoginActivity.this));
                     finish();
-                   // hideForm(true);
+                    hideForm(true);
 
                 } else {
                     Toast.makeText(LoginActivity.this,R.string.log_in_failed,Toast.LENGTH_SHORT).show();

@@ -153,44 +153,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         }
 
-
-     //   hideForm(true);
-
-//        firebaseAuth.createUserWithEmailAndPassword(emailTextInputEditText.getText().toString(),passwordTextInputEditText.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//            @Override
-//            public void onComplete(@NonNull Task<AuthResult> task) {
-//                if (task.isSuccessful()) {
-//                    Toast.makeText(SignUpActivity.this,"create user",Toast.LENGTH_SHORT).show();
-//                    startActivity(MainActivity.getStartIntent(SignUpActivity.this));
-//                    finish();
-//                    uploadImageToFirebase();
-//
-//                    rider = new Rider();
-//                    String userId = firebaseAuth.getCurrentUser().getUid();
-//                    rider.setUsername(usernameTextInputEditText.getText().toString());
-//                    rider.setPhoto(mUserPhotoUri.toString());
-//                    rider.setId(userId);
-//
-//
-//                    database.getReference(USER_REF_PATH).child(userId).setValue(rider).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<Void> task) {
-//                            if (task.isSuccessful()) {
-//                                Toast.makeText(SignUpActivity.this,"user added successfully",Toast.LENGTH_SHORT).show();
-//
-//                            } else {
-//                                hideForm(false);
-//                                Toast.makeText(SignUpActivity.this,"user added failed",Toast.LENGTH_SHORT).show();
-//
-//                            }
-//                        }
-//                    });
-//
-//                } else {
-//                    hideForm(false);
-//                }
-//            }
-//        });
     }
 
     private void sendUserToHome() {
@@ -254,14 +216,12 @@ public class SignUpActivity extends AppCompatActivity {
                                 Toast.makeText(SignUpActivity.this,"Uploading photo",Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(SignUpActivity.this,"not Uploading photo",Toast.LENGTH_SHORT).show();
-                              //  hideForm(false);
 
                             }
                         }
                     });
                 } else {
                     Toast.makeText(SignUpActivity.this,"not Uploading photo",Toast.LENGTH_SHORT).show();
-                   // hideForm(false);
                 }
             }
         });
