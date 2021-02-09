@@ -1,4 +1,4 @@
-package com.barmej.riderbluesea;
+package com.barmej.riderbluesea.domain.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -23,8 +23,6 @@ public class Trip implements Parcelable{
     private double destinationLat;
     private double destinationLng;
     private HashMap<String, Object> reservedTripsUser;
-
-
 
     public Trip(){
 
@@ -59,13 +57,13 @@ public class Trip implements Parcelable{
 
     public static final Creator<Trip> CREATOR = new Creator<Trip>() {
         @Override
-        public com.barmej.riderbluesea.Trip createFromParcel(Parcel in) {
-            return new com.barmej.riderbluesea.Trip(in);
+        public Trip createFromParcel(Parcel in) {
+            return new Trip(in);
         }
 
         @Override
-        public com.barmej.riderbluesea.Trip[] newArray(int size) {
-            return new com.barmej.riderbluesea.Trip[size];
+        public Trip[] newArray(int size) {
+            return new Trip[size];
         }
     };
 
@@ -221,7 +219,6 @@ public class Trip implements Parcelable{
         AVAILABLE,
         START_TRIP,
         ARRIVED,
-        FINISH_TRIP
 
     }
 }

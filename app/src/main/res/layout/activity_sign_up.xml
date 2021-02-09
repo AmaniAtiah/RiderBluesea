@@ -40,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/download_image_view"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:src="@drawable/ic_file_upload_black_24dp"
@@ -147,6 +147,16 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sign_up_button" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/image_view_users"
+        app:layout_constraintStart_toStartOf="@+id/image_view_users"
+        app:layout_constraintTop_toBottomOf="@+id/image_view_users" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

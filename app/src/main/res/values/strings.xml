@@ -5,7 +5,9 @@
     <string name="email">البريد الإلكتروني</string>
     <string name="password">كلمة السر</string>
     <string name="have_an_account">لديك حساب؟</string>
+    <string name="dont_have_an_account">ليس لديك حساب؟</string>
     <string name="log_in">تسجيل دخول</string>
+    <string name="log_in_failed">فشل في تسجيل دخول</string>
     <string name="date_sample">29 أبريل</string>
     <string name="available_seats">مقاعد متوفرة</string>
     <string name="booked">محجوز</string>
@@ -19,5 +21,6 @@
     <string name="invalid_email">الايميل غير صالح</string>
     <string name="invalid_password">كلمة المرور قصيرة</string>
     <string name="error_msg_username">لا يمكن أن يكون اسم المستخدم فارغا فارغًا</string>
+    <string name="add_image">يجب اضافة صورة</string>
 
 </resources>

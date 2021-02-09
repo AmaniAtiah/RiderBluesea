@@ -1,6 +1,7 @@
 package com.barmej.riderbluesea;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -10,6 +11,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.barmej.riderbluesea.domain.entity.Rider;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -36,6 +39,7 @@ public class SignUpActivity extends AppCompatActivity {
     private static final int REQUEST_GET_PHOTO = 2;
     public static final String USER_REF_PATH = "users";
     private ImageView userPhotoImageView;
+    private ImageView downloadImageView;
     private TextInputLayout usernameTextInputLayout;
     private TextInputEditText usernameTextInputEditText;
     private TextInputLayout emailTextInputLayout;
@@ -48,15 +52,18 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase database;
     private Rider rider;
+    private ProgressBar progressBar;
 
-
-
+    public static Intent getStartIntent(Context context) {
+        return new Intent(context, SignUpActivity.class);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
         userPhotoImageView = findViewById(R.id.image_view_users);
+        downloadImageView = findViewById(R.id.download_image_view);
         usernameTextInputLayout = findViewById(R.id.input_layout_username);
         usernameTextInputEditText = findViewById(R.id.edit_text_username);
         emailTextInputLayout = findViewById(R.id.input_layout_email);
@@ -65,6 +72,7 @@ public class SignUpActivity extends AppCompatActivity {
         passwordTextInputEditText = findViewById(R.id.edit_text_password);
         signUpButton = findViewById(R.id.sign_up_button);
         doYouHaveAnAccountButton = findViewById(R.id.do_you_have_an_account_button);
+        progressBar = findViewById(R.id.progressBar);
 
         firebaseAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
@@ -87,22 +95,39 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(LoginActivity.getStartIntent(SignUpActivity.this));
-
-
             }
         });
-
-
-
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (firebaseUser != null) {
-            startActivity(MainActivity.getStartIntent(SignUpActivity.this));
+            hideForm(true);
+            startActivity(HomeActivity.getStartIntent(SignUpActivity.this));
             finish();
-
         }
 
+    }
+
+    private void hideForm(boolean hide) {
+        if (hide) {
+            progressBar.setVisibility(View.VISIBLE);
+            passwordTextInputLayout.setVisibility(View.INVISIBLE);
+            emailTextInputLayout.setVisibility(View.INVISIBLE);
+            usernameTextInputLayout.setVisibility(View.INVISIBLE);
+            userPhotoImageView.setVisibility(View.INVISIBLE);
+            downloadImageView.setVisibility(View.INVISIBLE);
+            doYouHaveAnAccountButton.setVisibility(View.INVISIBLE);
+            signUpButton.setVisibility(View.INVISIBLE);
+        } else {
+            progressBar.setVisibility(View.INVISIBLE);
+            passwordTextInputLayout.setVisibility(View.VISIBLE);
+            emailTextInputLayout.setVisibility(View.VISIBLE);
+            usernameTextInputLayout.setVisibility(View.VISIBLE);
+            userPhotoImageView.setVisibility(View.VISIBLE);
+            downloadImageView.setVisibility(View.VISIBLE);
+            doYouHaveAnAccountButton.setVisibility(View.VISIBLE);
+            signUpButton.setVisibility(View.VISIBLE);
+        }
     }
 
     private void createUserAccount() {
@@ -120,45 +145,95 @@ public class SignUpActivity extends AppCompatActivity {
             passwordTextInputLayout.setError(getString(R.string.invalid_password));
             return;
         }
+        if (mUserPhotoUri != null) {
+            sendUserToHome();
+        } else {
+           // hideForm(false);
+            Toast.makeText(this,R.string.add_image,Toast.LENGTH_SHORT).show();
 
+        }
+
+
+     //   hideForm(true);
+
+//        firebaseAuth.createUserWithEmailAndPassword(emailTextInputEditText.getText().toString(),passwordTextInputEditText.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<AuthResult> task) {
+//                if (task.isSuccessful()) {
+//                    Toast.makeText(SignUpActivity.this,"create user",Toast.LENGTH_SHORT).show();
+//                    startActivity(MainActivity.getStartIntent(SignUpActivity.this));
+//                    finish();
+//                    uploadImageToFirebase();
+//
+//                    rider = new Rider();
+//                    String userId = firebaseAuth.getCurrentUser().getUid();
+//                    rider.setUsername(usernameTextInputEditText.getText().toString());
+//                    rider.setPhoto(mUserPhotoUri.toString());
+//                    rider.setId(userId);
+//
+//
+//                    database.getReference(USER_REF_PATH).child(userId).setValue(rider).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Void> task) {
+//                            if (task.isSuccessful()) {
+//                                Toast.makeText(SignUpActivity.this,"user added successfully",Toast.LENGTH_SHORT).show();
+//
+//                            } else {
+//                                hideForm(false);
+//                                Toast.makeText(SignUpActivity.this,"user added failed",Toast.LENGTH_SHORT).show();
+//
+//                            }
+//                        }
+//                    });
+//
+//                } else {
+//                    hideForm(false);
+//                }
+//            }
+//        });
+    }
+
+    private void sendUserToHome() {
         firebaseAuth.createUserWithEmailAndPassword(emailTextInputEditText.getText().toString(),passwordTextInputEditText.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(SignUpActivity.this,"create user",Toast.LENGTH_SHORT).show();
-                    startActivity(MainActivity.getStartIntent(SignUpActivity.this));
+                    startActivity(HomeActivity.getStartIntent(SignUpActivity.this));
                     finish();
                     uploadImageToFirebase();
 
                     rider = new Rider();
                     String userId = firebaseAuth.getCurrentUser().getUid();
-                    // database.getReference(USER_REF_PATH).child(userId);
                     rider.setUsername(usernameTextInputEditText.getText().toString());
                     rider.setPhoto(mUserPhotoUri.toString());
                     rider.setId(userId);
+
+                    hideForm(true);
 
                     database.getReference(USER_REF_PATH).child(userId).setValue(rider).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
+                                hideForm(true);
                                 Toast.makeText(SignUpActivity.this,"user added successfully",Toast.LENGTH_SHORT).show();
 
                             } else {
+                                hideForm(false);
                                 Toast.makeText(SignUpActivity.this,"user added failed",Toast.LENGTH_SHORT).show();
 
                             }
                         }
                     });
 
-
                 } else {
-                    Toast.makeText(SignUpActivity.this,"upload task failed",Toast.LENGTH_SHORT).show();
+                    hideForm(false);
+                    Toast.makeText(SignUpActivity.this,"user added failed",Toast.LENGTH_SHORT).show();
 
                 }
             }
         });
     }
-
 
     public static boolean isValidEmail(CharSequence target) {
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
@@ -178,10 +253,15 @@ public class SignUpActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Toast.makeText(SignUpActivity.this,"Uploading photo",Toast.LENGTH_SHORT).show();
                             } else {
+                                Toast.makeText(SignUpActivity.this,"not Uploading photo",Toast.LENGTH_SHORT).show();
+                              //  hideForm(false);
 
                             }
                         }
                     });
+                } else {
+                    Toast.makeText(SignUpActivity.this,"not Uploading photo",Toast.LENGTH_SHORT).show();
+                   // hideForm(false);
                 }
             }
         });
@@ -209,7 +289,6 @@ public class SignUpActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),R.string.read_permission_needed_to_access_files,Toast.LENGTH_SHORT).show();
             }
         }
-
     }
 
     @Override
@@ -223,7 +302,6 @@ public class SignUpActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     Toast.makeText(SignUpActivity.this,R.string.photo_selection_error,Toast.LENGTH_SHORT).show();
                 }
-
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.barmej.riderbluesea;
+package com.barmej.riderbluesea.callback;
 
 public interface BookTripCommunicationInterface {
     void bookFlight();

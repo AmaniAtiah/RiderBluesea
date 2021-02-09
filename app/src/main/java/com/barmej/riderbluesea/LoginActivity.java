@@ -7,11 +7,13 @@ import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.barmej.riderbluesea.domain.entity.Rider;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -33,8 +35,8 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText passwordTextInputEditText;
     private Button loginButton;
     private FirebaseAuth firebaseAuth;
-
-
+    private ProgressBar progressBar;
+    private  Button dontHaveAnAccount;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, LoginActivity.class);
@@ -49,6 +51,8 @@ public class LoginActivity extends AppCompatActivity {
         passwordTextInputLayout = findViewById(R.id.input_layout_password);
         passwordTextInputEditText = findViewById(R.id.edit_text_password);
         loginButton = findViewById(R.id.login_button);
+        progressBar = findViewById(R.id.progress_bar);
+        dontHaveAnAccount = findViewById(R.id.dont_have_an_account_button);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -61,15 +65,24 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        dontHaveAnAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(SignUpActivity.getStartIntent(LoginActivity.this));
+
+            }
+        });
+
         if (firebaseUser != null) {
 
-            final String userId =firebaseAuth.getCurrentUser().getUid();
+            final String userId = firebaseAuth.getCurrentUser().getUid();
             FirebaseDatabase.getInstance().getReference(USER_REF_PATH).child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     Global.CURRENT_USER = snapshot.getValue(Rider.class);
-                    startActivity(MainActivity.getStartIntent(LoginActivity.this));
+                    startActivity(HomeActivity.getStartIntent(LoginActivity.this));
                     finish();
+                    hideForm(true);
                 }
 
                 @Override
@@ -77,8 +90,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
             });
-
-
 
         }
     }
@@ -94,17 +105,19 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        hideForm(true);
+
         firebaseAuth.signInWithEmailAndPassword(emailTextInputEditText.getText().toString(), passwordTextInputEditText.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-
-
-                    startActivity(MainActivity.getStartIntent(LoginActivity.this));
+                    startActivity(HomeActivity.getStartIntent(LoginActivity.this));
                     finish();
+                   // hideForm(true);
 
                 } else {
-                    Toast.makeText(LoginActivity.this,"error",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this,R.string.log_in_failed,Toast.LENGTH_SHORT).show();
+                    hideForm(false);
                 }
             }
         });
@@ -112,5 +125,21 @@ public class LoginActivity extends AppCompatActivity {
 
     public static boolean isValidEmail(CharSequence target) {
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
+    }
+
+    private void hideForm(boolean hide) {
+        if (hide) {
+            progressBar.setVisibility(View.VISIBLE);
+            passwordTextInputLayout.setVisibility(View.INVISIBLE);
+            emailTextInputLayout.setVisibility(View.INVISIBLE);
+            loginButton.setVisibility(View.INVISIBLE);
+
+        } else {
+            progressBar.setVisibility(View.INVISIBLE);
+            passwordTextInputLayout.setVisibility(View.VISIBLE);
+            emailTextInputLayout.setVisibility(View.VISIBLE);
+            loginButton.setVisibility(View.VISIBLE);
+
+        }
     }
 }

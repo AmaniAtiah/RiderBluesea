@@ -1,4 +1,4 @@
-package com.barmej.riderbluesea;
+package com.barmej.riderbluesea.domain.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -117,9 +117,4 @@ public class Rider implements Parcelable {
         dest.writeString(photo);
     }
 
-    public enum Status{
-        AVAILABLE,
-        BOOK_TRIP,
-        ARRIVED
-    }
 }

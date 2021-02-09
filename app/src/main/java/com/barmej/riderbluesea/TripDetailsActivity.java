@@ -17,6 +17,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.barmej.riderbluesea.callback.BookTripCommunicationInterface;
+import com.barmej.riderbluesea.callback.StatusCallBack;
+import com.barmej.riderbluesea.domain.TripManager;
+import com.barmej.riderbluesea.domain.entity.Trip;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
@@ -50,6 +54,8 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
     private BookTripCommunicationInterface tripCommunicationInterface;
     private Button cancelButton;
     private Marker currentMarker;
+    private Marker pickUpMarker;
+    private Marker destinationMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,60 +75,14 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
 
         if (getIntent() != null && getIntent().getExtras() != null) {
             trip = getIntent().getExtras().getParcelable(TRIP_DATA);
-//            System.out.println("TRIP DETAILS: " + trip.getId());
             if (trip != null) {
                 mDateTextView.setText(trip.getFormattedDate());
                 mFromCountryTextView.setText(trip.getFromCountry());
                 mToCountryTextView.setText(trip.getToCountry());
                 mAvailableSeatTextViewNum.setText(String.valueOf(trip.getAvailableSeats()));
-
-//                final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//                FirebaseDatabase.getInstance().getReference(USER_REF_PATH).child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                      //  Rider rider = snapshot.getValue(Rider.class);
-//                        System.out.println("TRIP DETAILS TO BE UPDATED: " + trip.getId());
-//                        if(Global.CURRENT_USER.getReservedTrips().containsKey(trip.getId())) {
-//                            bookButton.setVisibility(View.GONE);
-//                            cancelButton.setVisibility(View.VISIBLE);
-//
-//                            System.out.println("RES TRUE");
-//
-//                        } else {
-//                            bookButton.setVisibility(View.VISIBLE);
-//                            cancelButton.setVisibility(View.GONE);
-//                            System.out.println("RES FALSE");
-//                        }
-//                        if (trip.getAvailableSeats() == 0) {
-//                            hideAllViews();
-//                            NoAvailableSeat.setVisibility(View.VISIBLE);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//
-//                    }
-//                });
-           }
+            }
 
         }
-
-//        if(Global.CURRENT_USER.getReservedTrips().containsKey(trip.getId())) {
-//            bookButton.setVisibility(View.GONE);
-//            tripBooked.setVisibility(View.VISIBLE);
-//            System.out.println("RES TRUE");
-//
-//        } else {
-//            bookButton.setVisibility(View.VISIBLE);
-//            tripBooked.setVisibility(View.GONE);
-//            System.out.println("RES FALSE");
-//        }
-//
-//        if (trip.getAvailableSeats() == 0) {
-//            hideAllViews();
-//            NoAvailableSeat.setVisibility(View.VISIBLE);
-//        }
 
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
@@ -144,24 +104,18 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
                 cancelFlight();
             }
         });
-
     }
-
 
     private void bookFlight() {
         if (tripCommunicationInterface != null) {
             tripCommunicationInterface.bookFlight();
-//            bookButton.setVisibility(View.GONE);
-//            cancelButton.setVisibility(View.VISIBLE);
         }
     }
 
     private void cancelFlight() {
        if (tripCommunicationInterface != null) {
             tripCommunicationInterface.cancelFlight();
-//            bookButton.setVisibility(View.VISIBLE);
-//            cancelButton.setVisibility(View.GONE);
-        }
+       }
     }
 
     private void getBookCommunicationInterface() {
@@ -174,7 +128,6 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void cancelFlight() {
                 TripManager.getInstance().cancelFlight();
-
             }
         };
     }
@@ -182,52 +135,40 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
     private StatusCallBack getStatusCallBack() {
         return new StatusCallBack() {
             @Override
-            public void onUpdate(FullStatus fullStatus) {
-              //  trip.getAvailableSeats();
-                trip = fullStatus.getTrip();
+            public void onUpdate(Trip trip) {
+            //    trip = fullStatus.getTrip();
                 mAvailableSeatTextViewNum.setText(String.valueOf(trip.getAvailableSeats()));
-                System.out.println("RESULT");
-
 
                 if(Global.CURRENT_USER.getReservedTrips().containsKey(trip.getId())) {
-               //     hideAllViews();
                     bookButton.setVisibility(View.GONE);
                     cancelButton.setVisibility(View.VISIBLE);
-                    System.out.println("RES TRUE");
-
-
                 } else {
                     bookButton.setVisibility(View.VISIBLE);
                     cancelButton.setVisibility(View.GONE);
-                    System.out.println("RES FALSE");
 
-                    //trip = fullStatus.getTrip();
                     if (trip.getAvailableSeats() == 0) {
                         hideAllViews();
                         linearLayoutAvailableSeat.setVisibility(View.VISIBLE);
                         mAvailableSeatTextViewNum.setVisibility(View.VISIBLE);
                         mAvailableSeatTextView.setVisibility(View.VISIBLE);
-                      //  NoAvailableSeat.setVisibility(View.VISIBLE);
                     }
                 }
 
                 if (trip.getStatus().equals(Trip.Status.START_TRIP.name())) {
                     hideAllViews();
-                    showOnTripView(fullStatus);
+                    showOnTripView(trip);
                 }
-
 
             }
 
         };
     }
 
-    public void showOnTripView(FullStatus fullStatus) {
-        Trip trip = fullStatus.getTrip();
+    public void showOnTripView(Trip trip) {
+       // Trip trip = fullStatus.getTrip();
         setCurrentMarker(new LatLng(trip.getCurrentLat(), trip.getCurrentLng()));
-    }
-
-    private void updateWithStatus(FullStatus fullStatus) {
+        setPickUpMarker(new LatLng(trip.getPickupLat(), trip.getPickupLng()));
+        setDestinationMarker(new LatLng(trip.getDestinationLat(), trip.getDestinationLng()));
     }
 
     public void setCurrentMarker(LatLng target) {
@@ -244,6 +185,38 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
             currentMarker.setPosition(target);
         }
     }
+
+    public void setPickUpMarker(LatLng target) {
+        if (mMap == null) return;
+
+        if (pickUpMarker == null) {
+            BitmapDescriptor descriptor = BitmapDescriptorFactory.fromResource(R.drawable.position);
+            MarkerOptions options = new MarkerOptions();
+            options.icon(descriptor);
+            options.position(target);
+
+            pickUpMarker = mMap.addMarker(options);
+
+        } else {
+            pickUpMarker.setPosition(target);
+        }
+    }
+
+    public void setDestinationMarker(LatLng target) {
+        if (mMap == null)
+            return;
+        if (destinationMarker == null) {
+            BitmapDescriptor descriptor = BitmapDescriptorFactory.fromResource(R.drawable.destination);
+            MarkerOptions options = new MarkerOptions();
+            options.icon(descriptor);
+            options.position(target);
+            destinationMarker = mMap.addMarker(options);
+
+        } else {
+            destinationMarker.setPosition(target);
+        }
+    }
+
     public void setBookTripCommunicationInterface(BookTripCommunicationInterface tripCommunicationInterface) {
         this.tripCommunicationInterface = tripCommunicationInterface;
     }
@@ -309,7 +282,6 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
 
     }
 
-
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState,@NonNull PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState,outPersistentState);
@@ -326,7 +298,6 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
     public void onResume() {
         super.onResume();
         mMapView.onResume();
-        System.out.println("onResume");
         TripManager.getInstance().startListeningForStatus(statusCallBack, trip.getId());
     }
 

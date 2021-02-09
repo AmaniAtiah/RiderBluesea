@@ -112,6 +112,7 @@
             android:drawableStart="@drawable/ic_check_circle_accent_color_24dp"
             android:drawablePadding="4dp"
             android:text="@string/booked"
+            android:visibility="gone"
             android:textColor="@color/colorAccent"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

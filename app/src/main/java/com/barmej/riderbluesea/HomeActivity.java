@@ -10,8 +10,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,7 +17,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.barmej.riderbluesea.domain.entity.Rider;
+import com.barmej.riderbluesea.fragment.CurrentTripFragment;
+import com.barmej.riderbluesea.fragment.TripListFragment;
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,19 +30,17 @@ import com.google.firebase.database.ValueEventListener;
 
 import static com.barmej.riderbluesea.SignUpActivity.USER_REF_PATH;
 
-public class MainActivity extends AppCompatActivity {
-    private final static String REQUEST_TRIP_FRAGMENT_TAG = "REQUEST_TRIP_FRAGMENT_TAG";
-    private final static String ON_TRIP_FRAGMENT_TAG = "ON_TRIP_FRAGMENT_TAG";
+public class HomeActivity extends AppCompatActivity {
     private TextView userNameTv;
     private ImageView userImageView;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
-    //private StatusCallBack statusCallBack = getStatusCallBack();
     private Toolbar toolbar;
     private FrameLayout frameLayout;
+    private BottomNavigationView bottomNavigationView;
 
     public static Intent getStartIntent(Context context) {
-        return new Intent(context, MainActivity.class);
+        return new Intent(context, HomeActivity.class);
     }
 
     @Override
@@ -57,22 +57,18 @@ public class MainActivity extends AppCompatActivity {
 
         frameLayout = findViewById(R.id.frame_layout);
 
-
-        //toolbar.inflateMenu(R.menu.main_menu);
-
-
-        // firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
-
-
-        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         String userId = firebaseAuth.getCurrentUser().getUid();
 
         setFragment(new TripListFragment());
         setFragment(new CurrentTripFragment());
 
+//        bottomNavigationView = findViewById(R.id.navigation_bottom);
+
+//        bottomNavigationView.setOnNavigationItemSelectedListener(bottomNav);
+//        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new TripListFragment()).commit();
 
         firebaseDatabase.getReference(USER_REF_PATH).child(userId).addValueEventListener(new ValueEventListener() {
             @Override
@@ -80,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
                 Global.CURRENT_USER = snapshot.getValue(Rider.class);
                 userNameTv.setText(Global.CURRENT_USER.getUsername());
                 Glide.with(getApplicationContext()).load(Global.CURRENT_USER.getPhoto()).into(userImageView);
-
             }
 
             @Override
@@ -90,6 +85,33 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+//    private BottomNavigationView.OnNavigationItemSelectedListener bottomNav =
+//            new BottomNavigationView.OnNavigationItemSelectedListener() {
+//                @Override
+//                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                    Fragment selectedFragment = null;
+//                    switch (item.getItemId()) {
+//                        case R.id.nav_main:
+//                            selectedFragment = new TripListFragment();
+//                            break;
+//
+//                        case R.id.nav_reserve_trip:
+//                            selectedFragment = new reservedTripFragment();
+//                            break;
+//
+//                        case R.id.nav_current_trip:
+//                            selectedFragment = new CurrentTripFragment();
+//                            break;
+//
+//                        case R.id.nav_my_account:
+//                            selectedFragment = new AccountFragment();
+//                            break;
+//                    }
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, selectedFragment).commit();
+//                    return true;
+//                }
+//            };
 
     private void setFragment(Fragment fragment){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -103,8 +125,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.main_menu, menu);
-        SpannableString s = new SpannableString("My red MenuItem");
-        s.setSpan(new ForegroundColorSpan(R.color.colorAccent), 0, s.length(), 0);
+//        SpannableString s = new SpannableString("My red MenuItem");
+//        s.setSpan(new ForegroundColorSpan(R.color.colorAccent), 0, s.length(), 0);
         return true;
 
     }
@@ -113,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_logout) {
             FirebaseAuth.getInstance().signOut();
-            startActivity(LoginActivity.getStartIntent(MainActivity.this));
+            startActivity(LoginActivity.getStartIntent(HomeActivity.this));
             finish();
         }
         return super.onOptionsItemSelected(item);

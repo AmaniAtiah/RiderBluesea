@@ -1,4 +1,4 @@
-package com.barmej.riderbluesea;
+package com.barmej.riderbluesea.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.barmej.riderbluesea.R;
+import com.barmej.riderbluesea.TripDetailsActivity;
+import com.barmej.riderbluesea.TripListAdapter;
+import com.barmej.riderbluesea.domain.entity.Trip;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -19,21 +23,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class TripListFragment extends Fragment implements TripListAdapter.OnTripClickListener{
+public class TripListFragment extends Fragment implements TripListAdapter.OnTripClickListener {
     public static final String TRIP_REF_PATH = "trips";
-    private static final String INITIAL_STATUS_EXTRA = "INITIAL_STATUS_EXTRA";
     private RecyclerView mRecyclerViewTrip;
     private TripListAdapter mTripsListAdapter;
     private ArrayList<Trip> mTrips;
-
-
-//    public static TripListFragment getInstance(FullStatus status) {
-//        TripListFragment fragment = new TripListFragment();
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable(INITIAL_STATUS_EXTRA, status);
-//        fragment.setArguments(bundle);
-//        return fragment;
-//    }
 
     @Nullable
     @Override
@@ -51,8 +45,6 @@ public class TripListFragment extends Fragment implements TripListAdapter.OnTrip
         mTrips = new ArrayList<>();
         mTripsListAdapter = new TripListAdapter(mTrips,TripListFragment.this);
         mRecyclerViewTrip.setAdapter(mTripsListAdapter);
-
-
 
             FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
             firebaseDatabase.getReference(TRIP_REF_PATH).addValueEventListener(new ValueEventListener() {
