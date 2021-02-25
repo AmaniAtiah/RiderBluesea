@@ -8,4 +8,9 @@
         android:title="تسجيل الخروج"
         app:itemTextColor="@android:color/holo_red_dark" />
 
+    <item
+        android:id="@+id/action_account"
+        android:title="حسابي"
+        app:itemTextColor="@android:color/holo_red_dark" />
+
 </menu>

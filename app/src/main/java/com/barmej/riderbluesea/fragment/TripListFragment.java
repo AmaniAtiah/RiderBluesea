@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +22,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class TripListFragment extends Fragment implements TripListAdapter.OnTripClickListener {
@@ -28,6 +31,7 @@ public class TripListFragment extends Fragment implements TripListAdapter.OnTrip
     private RecyclerView mRecyclerViewTrip;
     private TripListAdapter mTripsListAdapter;
     private ArrayList<Trip> mTrips;
+    private TextView noTripAvailable;
 
     @Nullable
     @Override
@@ -40,6 +44,7 @@ public class TripListFragment extends Fragment implements TripListAdapter.OnTrip
         super.onViewCreated(view,savedInstanceState);
 
         mRecyclerViewTrip = view.findViewById(R.id.recycler_view_trip);
+        noTripAvailable = view.findViewById(R.id.no_trip_available);
         mRecyclerViewTrip.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mTrips = new ArrayList<>();
@@ -57,6 +62,7 @@ public class TripListFragment extends Fragment implements TripListAdapter.OnTrip
                             if (trip != null) {
                                 if (trip.getStatus().equals(Trip.Status.AVAILABLE.name())) {
                                     mTrips.add(trip);
+                                    noTripAvailable.setVisibility(View.GONE);
                                 }
                             }
                             mTripsListAdapter.notifyDataSetChanged();

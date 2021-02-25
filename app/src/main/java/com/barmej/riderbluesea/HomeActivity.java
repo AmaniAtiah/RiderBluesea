@@ -102,6 +102,9 @@ public class HomeActivity extends AppCompatActivity {
             FirebaseAuth.getInstance().signOut();
             startActivity(LoginActivity.getStartIntent(HomeActivity.this));
             finish();
+        } else if (item.getItemId() == R.id.action_account) {
+            startActivity(LoginActivity.getStartIntent(HomeActivity.this));
+
         }
         return super.onOptionsItemSelected(item);
     }
