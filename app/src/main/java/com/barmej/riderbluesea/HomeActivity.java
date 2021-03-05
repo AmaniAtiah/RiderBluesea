@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.barmej.riderbluesea.domain.entity.Global;
 import com.barmej.riderbluesea.domain.entity.Rider;
 import com.barmej.riderbluesea.fragment.CurrentTripFragment;
 import com.barmej.riderbluesea.fragment.TripListFragment;
@@ -69,8 +70,10 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Global.CURRENT_USER = snapshot.getValue(Rider.class);
-                userNameTv.setText(Global.CURRENT_USER.getUsername());
-                Glide.with(getApplicationContext()).load(Global.CURRENT_USER.getPhoto()).into(userImageView);
+                if (Global.CURRENT_USER != null) {
+                    userNameTv.setText(Global.CURRENT_USER.getUsername());
+                    Glide.with(getApplicationContext()).load(Global.CURRENT_USER.getPhoto()).placeholder(R.drawable.ic_account_circle_black_24dp).into(userImageView);
+                }
             }
 
             @Override
@@ -103,7 +106,7 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(LoginActivity.getStartIntent(HomeActivity.this));
             finish();
         } else if (item.getItemId() == R.id.action_account) {
-            startActivity(LoginActivity.getStartIntent(HomeActivity.this));
+            startActivity(AccountActivity.getStartIntent(HomeActivity.this));
 
         }
         return super.onOptionsItemSelected(item);

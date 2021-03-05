@@ -2,7 +2,7 @@ package com.barmej.riderbluesea.domain;
 
 import androidx.annotation.NonNull;
 
-import com.barmej.riderbluesea.Global;
+import com.barmej.riderbluesea.domain.entity.Global;
 import com.barmej.riderbluesea.domain.entity.Trip;
 import com.barmej.riderbluesea.callback.StatusCallBack;
 import com.google.firebase.auth.FirebaseAuth;

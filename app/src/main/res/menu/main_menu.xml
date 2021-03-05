@@ -10,7 +10,7 @@
 
     <item
         android:id="@+id/action_account"
-        android:title="حسابي"
+        android:title="@string/my_account"
         app:itemTextColor="@android:color/holo_red_dark" />
 
 </menu>

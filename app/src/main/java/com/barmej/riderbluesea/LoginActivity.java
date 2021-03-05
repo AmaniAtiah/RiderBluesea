@@ -8,11 +8,13 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.barmej.riderbluesea.domain.entity.Global;
 import com.barmej.riderbluesea.domain.entity.Rider;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -37,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private ProgressBar progressBar;
     private  Button dontHaveAnAccount;
+    private TextView forgotPassword;
+
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, LoginActivity.class);
@@ -53,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.login_button);
         progressBar = findViewById(R.id.progress_bar);
         dontHaveAnAccount = findViewById(R.id.dont_have_an_account_button);
+        forgotPassword = findViewById(R.id.reset_password);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -70,6 +75,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(SignUpActivity.getStartIntent(LoginActivity.this));
 
+            }
+        });
+
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ResetPasswordActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -132,13 +145,17 @@ public class LoginActivity extends AppCompatActivity {
             progressBar.setVisibility(View.VISIBLE);
             passwordTextInputLayout.setVisibility(View.INVISIBLE);
             emailTextInputLayout.setVisibility(View.INVISIBLE);
+            forgotPassword.setVisibility(View.INVISIBLE);
             loginButton.setVisibility(View.INVISIBLE);
+            dontHaveAnAccount.setVisibility(View.INVISIBLE);
 
         } else {
             progressBar.setVisibility(View.INVISIBLE);
             passwordTextInputLayout.setVisibility(View.VISIBLE);
             emailTextInputLayout.setVisibility(View.VISIBLE);
+            forgotPassword.setVisibility(View.VISIBLE);
             loginButton.setVisibility(View.VISIBLE);
+            dontHaveAnAccount.setVisibility(View.VISIBLE);
 
         }
     }

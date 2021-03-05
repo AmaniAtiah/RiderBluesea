@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat;
 import com.barmej.riderbluesea.callback.BookTripCommunicationInterface;
 import com.barmej.riderbluesea.callback.StatusCallBack;
 import com.barmej.riderbluesea.domain.TripManager;
+import com.barmej.riderbluesea.domain.entity.Global;
 import com.barmej.riderbluesea.domain.entity.Trip;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;

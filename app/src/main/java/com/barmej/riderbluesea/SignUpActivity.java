@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.barmej.riderbluesea.domain.entity.Global;
 import com.barmej.riderbluesea.domain.entity.Rider;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,6 +34,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.UUID;
+
+import static android.content.Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION;
+import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
 
 public class SignUpActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_READ_STORAGE = 1;
@@ -51,7 +55,7 @@ public class SignUpActivity extends AppCompatActivity {
     private Uri mUserPhotoUri;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase database;
-    private Rider rider;
+   // private Rider rider;
     private ProgressBar progressBar;
 
     public static Intent getStartIntent(Context context) {
@@ -165,15 +169,16 @@ public class SignUpActivity extends AppCompatActivity {
                     finish();
                     uploadImageToFirebase();
 
-                    rider = new Rider();
+                    Global.CURRENT_USER = new Rider();
                     String userId = firebaseAuth.getCurrentUser().getUid();
-                    rider.setUsername(usernameTextInputEditText.getText().toString());
-                    rider.setPhoto(mUserPhotoUri.toString());
-                    rider.setId(userId);
+                    Global.CURRENT_USER.setUsername(usernameTextInputEditText.getText().toString());
+                    Global.CURRENT_USER.setEmail(emailTextInputEditText.getText().toString());
+                    Global.CURRENT_USER.setPhoto(mUserPhotoUri.toString());
+                    Global.CURRENT_USER.setId(userId);
 
                     hideForm(true);
 
-                    database.getReference(USER_REF_PATH).child(userId).setValue(rider).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    database.getReference(USER_REF_PATH).child(userId).setValue(Global.CURRENT_USER).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
@@ -270,6 +275,7 @@ public class SignUpActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/*");
+        //intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
         startActivityForResult(Intent.createChooser(intent, getString(R.string.choose_photo)), REQUEST_GET_PHOTO);
 
     }

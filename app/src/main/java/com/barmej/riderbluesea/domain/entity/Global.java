@@ -1,4 +1,4 @@
-package com.barmej.riderbluesea;
+package com.barmej.riderbluesea.domain.entity;
 
 import com.barmej.riderbluesea.domain.entity.Rider;
 

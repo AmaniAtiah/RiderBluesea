@@ -25,7 +25,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/recycler_view_trip"
         android:textSize="20sp"
-        android:text="ليس هناك رحلات متاحة حاليا"/>
+        android:visibility="invisible"
+        android:text="@string/no_trip_available"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"

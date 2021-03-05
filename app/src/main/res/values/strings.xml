@@ -22,5 +22,26 @@
     <string name="invalid_password">كلمة المرور قصيرة</string>
     <string name="error_msg_username">لا يمكن أن يكون اسم المستخدم فارغا فارغًا</string>
     <string name="add_image">يجب اضافة صورة</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="change_password">تغيير كلمة السر</string>
+    <string name="forgot_password">هل نسيت كلمة السر</string>
+    <string name="edit_profile">تعديل معلومات الحساب</string>
+    <string name="profile">معلومات الحساب</string>
+    <string name="current_password">كلمة السر الحالية</string>
+    <string name="new_password">كلمة السر الجديدة</string>
+    <string name="confirm_password">اعادة كلمة السر الجديدة</string>
+    <string name="save">حفظ</string>
+    <string name="submit">ارسال</string>
+    <string name="send_link">لقد قمنا بارسال بريدا الكترونيا لاعادة تعيين كلمة المرور</string>
+    <string name="enter_email">ادخل البريد الالكتروني وسوف نرسل لك رابطا لاعادة تعيين كلمة المرور</string>
+    <string name="cancel_trip">الغاء الرحلة</string>
+    <string name="no_available_seat">لايوجد اماكن متاحة</string>
+    <string name="no_trip_available">ليس هناك رحلات متاحة حاليا</string>
+    <string name="my_account">حسابي</string>
+    <string name="error_msg_current_password">current password can\'t be empty</string>
+    <string name="error_msg_new_password">new password can\'t be empty</string>
+    <string name="error_msg_confirm_password">confirm password can\'t be empty</string>
+
+
 
 </resources>

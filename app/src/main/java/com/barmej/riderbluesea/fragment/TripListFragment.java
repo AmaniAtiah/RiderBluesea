@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +33,7 @@ public class TripListFragment extends Fragment implements TripListAdapter.OnTrip
     private TripListAdapter mTripsListAdapter;
     private ArrayList<Trip> mTrips;
     private TextView noTripAvailable;
+    private Trip trip;
 
     @Nullable
     @Override
@@ -58,15 +60,21 @@ public class TripListFragment extends Fragment implements TripListAdapter.OnTrip
                     mTrips.clear();
 
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            Trip trip = dataSnapshot.getValue(Trip.class);
+                             trip = dataSnapshot.getValue(Trip.class);
                             if (trip != null) {
                                 if (trip.getStatus().equals(Trip.Status.AVAILABLE.name())) {
                                     mTrips.add(trip);
-                                    noTripAvailable.setVisibility(View.GONE);
+                                    noTripAvailable.setVisibility(View.INVISIBLE);
+
                                 }
                             }
                             mTripsListAdapter.notifyDataSetChanged();
                         }
+
+                    if (trip == null) {
+                        noTripAvailable.setVisibility(View.VISIBLE);
+                    }
+
                 }
 
                 @Override
