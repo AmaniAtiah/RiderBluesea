@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.barmej.riderbluesea.callback.SaveClick;
 import com.barmej.riderbluesea.domain.entity.Global;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,8 +41,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private ImageView userPhotoImageView;
     private Button saveButton;
     private FirebaseDatabase database;
-    private SaveClick saveClick;
     private Uri mUserPhotoUri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,23 +54,18 @@ public class EditProfileActivity extends AppCompatActivity {
         saveButton = findViewById(R.id.save_button);
         database = FirebaseDatabase.getInstance();
 
-        getSaveClick();
-        setSaveClick(saveClick);
-
         if (getIntent() != null && getIntent().getExtras() != null) {
             Global.CURRENT_USER = getIntent().getExtras().getParcelable(RIDER_DATA);
             if (Global.CURRENT_USER != null) {
                 Glide.with(this).load(Global.CURRENT_USER.getPhoto()).placeholder(R.drawable.ic_account_circle_black_24dp).dontAnimate().into(userPhotoImageView);
                 usernameTextInputEditText.setText(Global.CURRENT_USER.getUsername());
-
-
             }
         }
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveClick();
+                updateData();
             }
         });
 
@@ -83,25 +77,6 @@ public class EditProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void saveClick() {
-        if (saveClick != null) {
-            saveClick.onClickSave();
-        }
-    }
-
-    private void getSaveClick() {
-        saveClick = new SaveClick() {
-            @Override
-            public void onClickSave() {
-                updateData();
-            }
-        };
-    }
-
-    public void setSaveClick(SaveClick saveClick) {
-        this.saveClick = saveClick;
-    }
-
     private void updateData() {
         if (TextUtils.isEmpty(usernameTextInputEditText.getText()) || mUserPhotoUri == null) {
             usernameTextInputLayout.setError(getString(R.string.error_msg_username));
@@ -110,15 +85,9 @@ public class EditProfileActivity extends AppCompatActivity {
         uploadImageToFirebase();
         Global.CURRENT_USER.setUsername(usernameTextInputEditText.getText().toString());
         Global.CURRENT_USER.setPhoto(mUserPhotoUri.toString());
-//        Intent intent = new Intent();
-//        intent.putExtra(RIDER_DATA, Global.CURRENT_USER);
-//        setResult(RESULT_OK, intent);
         finish();
         final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         database.getReference(USER_REF_PATH).child(userId).setValue(Global.CURRENT_USER);
-
-
-
     }
 
     private void uploadImageToFirebase() {
@@ -136,7 +105,6 @@ public class EditProfileActivity extends AppCompatActivity {
                                 Toast.makeText(EditProfileActivity.this,"Uploading photo",Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(EditProfileActivity.this,"not Uploading photo",Toast.LENGTH_SHORT).show();
-
                             }
                         }
                     });
@@ -145,8 +113,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
+
     private void requestExternalStoragePermission() {
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -155,7 +123,6 @@ public class EditProfileActivity extends AppCompatActivity {
         }else {
             launchGalleryIntent();
         }
-
     }
 
     @Override
@@ -190,10 +157,7 @@ public class EditProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/*");
-        //intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
         startActivityForResult(Intent.createChooser(intent, getString(R.string.choose_photo)), REQUEST_GET_PHOTO);
-
     }
-
 
 }

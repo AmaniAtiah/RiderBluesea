@@ -55,7 +55,6 @@ public class SignUpActivity extends AppCompatActivity {
     private Uri mUserPhotoUri;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase database;
-   // private Rider rider;
     private ProgressBar progressBar;
 
     public static Intent getStartIntent(Context context) {
@@ -109,7 +108,6 @@ public class SignUpActivity extends AppCompatActivity {
             startActivity(HomeActivity.getStartIntent(SignUpActivity.this));
             finish();
         }
-
     }
 
     private void hideForm(boolean hide) {
@@ -152,9 +150,7 @@ public class SignUpActivity extends AppCompatActivity {
         if (mUserPhotoUri != null) {
             sendUserToHome();
         } else {
-           // hideForm(false);
             Toast.makeText(this,R.string.add_image,Toast.LENGTH_SHORT).show();
-
         }
 
     }
@@ -240,7 +236,6 @@ public class SignUpActivity extends AppCompatActivity {
         }else {
             launchGalleryIntent();
         }
-
     }
 
     @Override
@@ -275,8 +270,6 @@ public class SignUpActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/*");
-        //intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
         startActivityForResult(Intent.createChooser(intent, getString(R.string.choose_photo)), REQUEST_GET_PHOTO);
-
     }
 }

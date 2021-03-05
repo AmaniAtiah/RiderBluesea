@@ -38,10 +38,10 @@
     <string name="no_available_seat">لايوجد اماكن متاحة</string>
     <string name="no_trip_available">ليس هناك رحلات متاحة حاليا</string>
     <string name="my_account">حسابي</string>
+    <string name="change_password_successfully">تم تغيير كلمة المرور بنجاح</string>
+    <string name="password_has_not_been_changed">لم يتم تغيير كلمة المرور بنجاح</string>
     <string name="error_msg_current_password">current password can\'t be empty</string>
     <string name="error_msg_new_password">new password can\'t be empty</string>
     <string name="error_msg_confirm_password">confirm password can\'t be empty</string>
-
-
 
 </resources>

@@ -64,8 +64,7 @@ public class TripListFragment extends Fragment implements TripListAdapter.OnTrip
                             if (trip != null) {
                                 if (trip.getStatus().equals(Trip.Status.AVAILABLE.name())) {
                                     mTrips.add(trip);
-                                    noTripAvailable.setVisibility(View.INVISIBLE);
-
+                                    noTripAvailable.setVisibility(View.GONE);
                                 }
                             }
                             mTripsListAdapter.notifyDataSetChanged();
@@ -74,7 +73,6 @@ public class TripListFragment extends Fragment implements TripListAdapter.OnTrip
                     if (trip == null) {
                         noTripAvailable.setVisibility(View.VISIBLE);
                     }
-
                 }
 
                 @Override
@@ -90,6 +88,5 @@ public class TripListFragment extends Fragment implements TripListAdapter.OnTrip
         Intent intent = new Intent(getContext(), TripDetailsActivity.class);
         intent.putExtra(TripDetailsActivity.TRIP_DATA, trip);
         startActivity(intent);
-
     }
 }

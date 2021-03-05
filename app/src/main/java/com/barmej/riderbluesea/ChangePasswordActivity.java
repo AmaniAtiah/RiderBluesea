@@ -45,7 +45,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
         updatePasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // updatePassword();
                 currentPasswordTextInputLayout.setError(null);
                 newPasswordTextInputLayout.setError(null);
                 confirmPasswordTextInputLayout.setError(null);
@@ -60,7 +59,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 } else if (newPasswordTextInputEditText.getText().toString().equals(confirmPasswordTextInputEditText.getText().toString())) {
                     updatePassword();
                 }
-
             }
         });
     }
@@ -76,32 +74,18 @@ public class ChangePasswordActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(ChangePasswordActivity.this,"ok",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ChangePasswordActivity.this,R.string.change_password_successfully,Toast.LENGTH_SHORT).show();
                                 finish();
                             } else {
-                                Toast.makeText(ChangePasswordActivity.this,"error",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ChangePasswordActivity.this,R.string.password_has_not_been_changed,Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
                 } else {
-                    Toast.makeText(ChangePasswordActivity.this,"error",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChangePasswordActivity.this,R.string.password_has_not_been_changed,Toast.LENGTH_SHORT).show();
 
                 }
             }
-//        }).addOnSuccessListener(new OnSuccessListener<Void>() {
-//            @Override
-//            public void onSuccess(Void aVoid) {
-//                user.updatePassword(newPasswordTextInputEditText.getText().toString())
-//                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                            @Override
-//                            public void onSuccess(Void aVoid) {
-//                                finish();
-//                                Toast.makeText(ChangePasswordActivity.this,"ok",Toast.LENGTH_SHORT).show();
-//
-//                            }
-//                        });
-//
-//            }
         });
     }
 }

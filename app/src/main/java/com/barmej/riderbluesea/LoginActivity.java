@@ -41,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
     private  Button dontHaveAnAccount;
     private TextView forgotPassword;
 
-
     public static Intent getStartIntent(Context context) {
         return new Intent(context, LoginActivity.class);
     }
@@ -60,7 +59,6 @@ public class LoginActivity extends AppCompatActivity {
         forgotPassword = findViewById(R.id.reset_password);
 
         firebaseAuth = FirebaseAuth.getInstance();
-
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +72,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(SignUpActivity.getStartIntent(LoginActivity.this));
-
             }
         });
 

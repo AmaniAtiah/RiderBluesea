@@ -38,7 +38,6 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase;
     private Toolbar toolbar;
     private FrameLayout frameLayout;
-    private BottomNavigationView bottomNavigationView;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, HomeActivity.class);
@@ -90,7 +89,6 @@ public class HomeActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-
     @SuppressLint("ResourceAsColor")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -112,10 +110,4 @@ public class HomeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-    }
 }

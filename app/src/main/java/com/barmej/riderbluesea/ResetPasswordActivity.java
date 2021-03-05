@@ -35,7 +35,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +59,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();                }
             }
         });
-
     }
 
     public static boolean isValidEmail(CharSequence target) {

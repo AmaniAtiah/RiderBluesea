@@ -82,7 +82,6 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
                 mToCountryTextView.setText(trip.getToCountry());
                 mAvailableSeatTextViewNum.setText(String.valueOf(trip.getAvailableSeats()));
             }
-
         }
 
         mMapView.onCreate(savedInstanceState);
@@ -137,7 +136,6 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
         return new StatusCallBack() {
             @Override
             public void onUpdate(Trip trip) {
-            //    trip = fullStatus.getTrip();
                 mAvailableSeatTextViewNum.setText(String.valueOf(trip.getAvailableSeats()));
 
                 if(Global.CURRENT_USER.getReservedTrips().containsKey(trip.getId())) {
@@ -146,7 +144,6 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
                 } else {
                     bookButton.setVisibility(View.VISIBLE);
                     cancelButton.setVisibility(View.GONE);
-
                     if (trip.getAvailableSeats() == 0) {
                         hideAllViews();
                         linearLayoutAvailableSeat.setVisibility(View.VISIBLE);
@@ -159,14 +156,12 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
                     hideAllViews();
                     showOnTripView(trip);
                 }
-
             }
 
         };
     }
 
     public void showOnTripView(Trip trip) {
-       // Trip trip = fullStatus.getTrip();
         setCurrentMarker(new LatLng(trip.getCurrentLat(), trip.getCurrentLng()));
         setPickUpMarker(new LatLng(trip.getPickupLat(), trip.getPickupLng()));
         setDestinationMarker(new LatLng(trip.getDestinationLat(), trip.getDestinationLng()));
@@ -229,7 +224,6 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
         mAvailableSeatTextView.setVisibility(View.GONE);
         linearLayoutAvailableSeat.setVisibility(View.GONE);
         cancelButton.setVisibility(View.GONE);
-
     }
 
     @Override
@@ -280,7 +274,6 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
                 }
             }
         });
-
     }
 
     @Override
